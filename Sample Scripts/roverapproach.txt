@@ -1,0 +1,20 @@
+brakes off.
+
+set target to "SmallRov".
+
+print "Get turned around".
+lock wheelsteering to target.
+lock wheel throttle to -1.
+wait until ABS(target:bearing) < 90.
+
+print "Now drive forward".
+lock wheelthrottle to 1.
+wait until target:distance < 150.
+
+print "Slow down!".
+lock wheelthrottle to -1.
+wait until target:distance < 50.
+
+print "Stop!!".
+unlock wheelthrottle.
+brakes on.

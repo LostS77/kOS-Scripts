@@ -1,0 +1,39 @@
+set tVal to 1.
+
+lock throttle to tVal.
+lock steering to up + R(0,0,180).
+stage.
+print "Launch!".
+
+until altitude > 10000 {
+if verticalspeed > 210 {
+set tVal to tVal - 0.02.
+}.
+}.
+
+lock steering to up + R(0,0,180) + R(0,-60,0).
+print "Begining gravity turn.".
+
+wait 5
+
+until throttle = 1 {
+set tVal to tVal + 0.02.
+if tVal > 1 {
+set tVal to 1.
+}.
+}.
+
+wait until stage:liquidfuel < 540.
+stage.
+print "Stage 1 separation".
+
+wait until apoapsis > 100200.
+lock throttle to 0.
+lock steering to prograde.
+print "Waiting for circularization burn.".
+
+wait until eta:apoapsis < 15.
+lock throttle to 1.
+print "Burn.".
+
+wait until periapsis > 99500.

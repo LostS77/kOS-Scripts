@@ -1,0 +1,19 @@
+declare parameter tgt.
+
+clearscreen.
+
+brakes off.
+lock wheelsteering to tgt.
+lock wheelthrottle to 1.
+
+until x:distance < 10
+{
+	print "Distance:    " + tgt:distance at (0,0).
+	print "Bearing:     " + tgt:bearing at (0,2).
+}.
+
+brakes on.
+wait 2.
+
+unlock all.
+clearscreen.

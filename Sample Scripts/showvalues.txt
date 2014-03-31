@@ -1,0 +1,10 @@
+clearscreen.
+
+print "Altitude" as (0,0).
+print "Apoapsis" as (20,0).
+
+until 0
+{
+	print altitude as (0,1).
+	print alt:apoapsis at (20,1).
+}.

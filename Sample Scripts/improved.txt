@@ -1,0 +1,26 @@
+// Launch Ship
+lock throttle to 1.
+lock steering to heading 90 by 90. // East, up
+stage.
+
+// Gravity turn
+wait until altitude > 10000.
+lock steering to heading 90 by 40. // East, 40deg
+
+// Stage when boosters are empty
+wait until stage:liquidfueld < 540.
+stage.
+
+// Wait for apoaps to get to right alt
+wait until apoapsis > 100350.
+lock throttle to 0.
+lock steering to prograde.
+
+// Circularize
+wait until eta:apoapsis < 15.
+lock throttle to 1.
+
+// Stop when periapsis high enough
+wait until periapsis > 100000.
+lock throttle to 0.
+unlock throttle.

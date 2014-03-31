@@ -1,0 +1,141 @@
+<html>
+<head><title>kOS Sensor Reporter Readme</title></head>
+<body>
+<h2>kOS Sensor Reporter Readme</h2>
+A mod from Kerbal Integrated Circuits Kompany.
+Code by David Grider.
+<h3>License</h3>
+    Feel free to modify. Just be sure to mention me in the credits. Thanks for 
+    downloading. <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+    Click here for official license.</a>
+<h3>Changelog</h3>
+v1.4
+<ul>
+    <li>Moved all non-sensor-related functions to a different PartModule called kOSExtensions, which is loaded with the kOS part.</li>
+    <li>Added five new functions: math!log(), math!logb(), math!ln(), math!e(), and vessel!isp().</li>
+    <li>Support for kOS 0.7 is being discontinued. Removed all single-precision-float-returning functions. Change all instances of sensor!____f() to sensor!____().</li>
+    <li>Removed eta!apoapsis() and eta!periapsis().</li>
+</ul>
+
+v1.3.2
+<ul>
+    <li>Fixed a bug introduced by expression changes in kOS 0.9. The colons in each function have been replaced with exclamation marks.</li>
+    <li>Fixed a bug introduced by expression changes in kOS 0.9. All functions return values. Void functions now return values.</li>
+</ul>
+
+v1.3.1
+<ul>
+    <li>Recompiled for KSP 0.22</li>
+</ul>
+
+v1.3
+<ul>
+    <li>Added the following functions: vessel!velocity, vessel!velocityf, math!pi, math!pif, physics!gravconst, physics!gravconstf, eta!apoapsis, eta!periapsis.</li>
+    <li>Fixed a bug where the sensor could not be selected in Action Groups.</li>
+</ul>
+
+v1.2
+<ul>
+<li>After noticing that kOS 0.8 was released, added an extra function for each sensor. sensor!____() now returns a double-precision float like before,
+and sensor!___f() returns a single-precision float. If you're using kOS 0.7, use sensor!____f() for comparisons.</li>
+</ul>
+
+v1.1
+<ul>
+    <li>Changed sensor!___() from double to float. This fixes problems with comparisons in kOS 0.7.</li>
+</ul>
+
+v1.0 Re-release
+<ul>
+    <li>Fixed a typo on the readme file.</li>
+</ul>
+
+v1.0
+<ul>
+    <li>Initial release</li>
+</ul>
+
+<h3>Installation</h3>
+Extract the GameData folder into your KSP folder and perform appropriate merges.
+<u>v1.0</u><br/>
+Initial release.
+
+<h3>Overview</h3>
+<p>The <b>kOS Sensor Reporter</b> from Kerbal Integrated Circuits Kompany is the latest in scientific data collection.</p>
+
+<p>This addon allows you to get data from accelerometers, barometers, thermometers, and gravimeters, and operate on that data in kOS. 
+The functions for each sensor are available <b>only</b> when the sensor is installed on the same craft as the kOS part. In other words, 
+if you have all the sensors except a barometer installed, you cannot call the barometer functions, as they will not be available.</p>
+
+<p>The sensor also has to be turned on to return any data. Calling <code>sensor!temp().</code> on a thermometer that is turned off will
+result in the function return NaN (Not a Number). The same applies to any sensor that is turned off.</p>
+
+<p>This mod exposes a total of 24 functions, four for each sensor, and eight others:<br/>
+<b>kOS Extension Functions</b>
+<br />These functions are available with the standard kOS part. If you use a custom kOS part, you can modify the "ksx_parts.cfg" file.
+<ul>
+    <li><code>math!pi()</code> - Returns a double-precision floating point (number) that represents the constant PI.</li>
+    <li><code>math!log(<i>number</i>)</code> - Returns the base-10 logarithm of the given number.</li>
+    <li><code>math!logb(<i>number, base</i>)</code> - Returns the logarithm of a number of a given base.</li>
+    <li><code>math!ln(<i>number</i>)</code> - Returns the natural logarithm of a number.</li>
+    <li><code>math!e()</code> - Returns the constant e, the base of the natural logarithm.</li>
+    <li><code>vessel!velocity()</code> - Returns a double-precision floating point (number) that contains the current orbital velocity.</li>
+    <li><code>vessel!isp()</code> - Returns the sum Isp (Specific Impulse) of the currently active engines.</li>
+    <li><code>physics!gravconst()</code> - Returns a double-precision floating point (number) that represents the gravitational constant G.</li>
+</ul>
+
+<b>Accelerometer</b>
+<ul>
+<li><code>sensor!accel()</code> - Returns a double-precision floating point (number) value from the accelerometer.
+<li><code>sensor!accelstr()</code> - Returns a string (text) value, which is the same text displayed in the accelerometer context menu.
+<li><code>sensor!accel!active()</code> - Returns a boolean (true/false) value that determines if the accelerometer is on.
+<li><code>sensor!accel!toggle()</code> - Toggles the power on the accelerometer and returns the result of the toggle. See <b>Toggle Note</b> for details.
+</ul>
+</p><p>
+<b>Gravimeter</b>
+<ul>
+<li><code>sensor!grav()</code> - Returns a double-precision floating point (number) value from the gravimeter.
+<li><code>sensor!gravstr()</code> - Returns a string (text) value, which is the same text displayed in the gravimeter context menu.
+<li><code>sensor!grav!active()</code> - Returns a boolean (true/false) value that determines if the gravimeter is on.
+<li><code>sensor!grav!toggle()</code> - Toggles the power on the gravimeter and returns the result of the toggle. See <b>Toggle Note</b> for details.
+</ul>
+</p><p>
+<b>Barometer</b>
+<ul>
+<li><code>sensor!press()</code> - Returns a double-precision floating point (number) value from the barometer.
+<li><code>sensor!pressstr()</code> - Returns a string (text) value, which is the same text displayed in the barometer context menu.
+<li><code>sensor!press!active()</code> - Returns a boolean (true/false) value that determines if the barometer is on.
+<li><code>sensor!press!toggle()</code> - Toggles the power on the barometer and returns the result of the toggle. See <b>Toggle Note</b> for details.
+</ul>
+</p><p>
+<b>Thermometer</b>
+<ul>
+<li><code>sensor!temp()</code> - Returns a double-precision floating point (number) value from the thermometer.
+<li><code>sensor!tempstr()</code> - Returns a string (text) value, which is the same text displayed in the thermometer context menu.
+<li><code>sensor!temp!active()</code> - Returns a boolean (true/false) value that determines if the thermometer is on.
+<li><code>sensor!temp!toggle()</code> - Toggles the power on the thermometer and returns the result of the toggle. See <b>Toggle Note</b> for details.
+</ul>
+</p><p>
+<h3>Toggle Note</h3>
+Toggle functions, which in versions prior to Sensor Reporter 1.3.2 returned no value, now return boolean values. The return value of a toggle function is now the result of the toggle. 
+The value can be stored and used, or ignored if you choose to do so. However, in order for the function to work correctly, you MUST store the value.
+<code>set x to sensor!accel!toggle().</code><br/>   
+<h3>kOS Extensions</h3>
+If you are using a part other than the default kOS part for a kOS computer, you must add it to the kosx.cfg configuration file located in /Kerbal Space Program/Game Data/Kerbal Integrated Circuit Kompany/kosx.cfg.
+Use the ModuleManager syntax:<br />
+<code>
+@PART[MykOSComputerPart]<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODULE<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name = kOSExtensions<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+}    
+</code>
+</p>
+<hr/>
+<p>
+This mod requires <a href="http://kerbalspaceport.com/kos/">kOS 0.8 or above</a> (not included) and uses the <a href="http://forum.kerbalspaceprogram.com/threads/31342-0-20-ModuleManager-1-3-for-all-your-stock-modding-needs?highlight=module%20manager">ModuleManager mod </a> which is included with this download.
+</p>
+</body>
+</html>
