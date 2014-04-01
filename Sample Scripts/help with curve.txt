@@ -1,0 +1,46 @@
+...
+lock dircheck to up * R(0,0,180).
+lock fyr to facing:yaw - dircheck:yaw.
+...
+when (airspeed > 2) then { 
+    until (altitude > 70000) {
+        wait 0.2.
+        log round(altitude) + "m, " 
+            + round(airspeed,1) + "m/s, " 
+            + round(pitch,1) + "deg, (" 
+            + round(fyr + 90,1) + " real / "
+            + round(pitch - fyr - 90,1) + " off) "
+            + round (tVar*100) + "% at "
+            + round(missiontime,1) + "s" 
+            to gravityturn.
+    }
+}
+...
+when altitude > 300 then {
+    set pitch to 88.    // get away from the pad!
+    sas off.
+    lock steering to heading 90 by pitch.  
+        //note: DON'T use "heading ... by ..." any more
+}.
+when altitude > 8000 then {
+    lock pitch to 80 - (altitude / 1000 - 8)^0.7 * 3.5.  
+        // experimental values, probably really wrong
+}.
+when (altitude > 39000 or pitch < 10.5) then {
+    unlock pitch.
+    set pitch to 10. 
+}.
+...
+
+lock throttle to tVar.
+stage.
+
+until (altitude > 30000 or apoapsis > 75000) {
+   ... (try for ideal speed) ...
+}
+
+... (circularize with external scripts -
+     vary prograde in a binary search, 
+     then execute node) ...
+
+... (log the amount of fuel left) ...

@@ -1,0 +1,68 @@
+// Show Count Down
+CLEARSCREEN.
+PRINT "3". WAIT 1. CLEARSCREEN.
+PRINT "2". WAIT 1. CLEARSCREEN.
+PRINT "1". WAIT 1. CLEARSCREEN.
+
+// Set Throttle to Full
+SET tVal to 1.
+
+SET SAS OFF.
+LOCK THROTTLE to tVal.
+LOCK STEERING to HEADING 90 by 90. // East, up
+STAGE.
+PRINT "Launch!".
+
+// Decrease throttle but try and keep speed between 210 & 250
+UNTIL altitude > 10000 {
+	IF VERTICALSPEED > 250 {
+		SET tVal to tVal – 0.02.
+	}.
+	IF VERTICALSPEED < 210 {
+		IF tVal < 1 {
+			SET tVal to tVal + 0.02.
+		}.
+	}.
+}.
+
+// Start gravity turn and slowly increase throttle to full
+PRINT "Beginning gravity turn.".
+LOCK STEERING to HEADING 90 by 40. // East, 40deg
+WAIT 5.
+UNTIL tVal = 1 {
+	SET tVal to tVal + 0.02.
+	IF tVal > 1 {
+		SET tVal to 1.
+	}.
+}.
+
+// Stage when boosters are empty
+WAIT UNTIL STAGE:LIQUIDFUEL < 540.
+STAGE.
+PRINT "Stage 1 separated.".
+
+// Wait for apoapsis to get to right alt of around 120000
+PRINT "Beginning to set apoapsis to 120,000.".
+WAIT UNTIL ALT:APOAPSIS > 120000.
+SET tVal to 0.
+LOCK STEERING to PROGRADE.
+WAIT 5.
+SET WRAP to 3.
+
+// Circularize
+WAIT UNTIL ETA:APOAPSIS < 30.
+SET WRAP to 0.
+PRINT "Beginning Circularize of orbit.".
+WAIT UNTIL ETA:APOAPSIS < 15.
+SET tVal to 1.
+
+// Wait for PERIAPSIS to get to right alt of around 100000
+PRINT "Beginning to set periapsis to 100,000.".
+WAIT UNTIL ALT:PERIAPSIS > 100000.
+SET tVal to 0.
+UNLOCK THROTTLE.
+UNLOCK STEERING.
+
+SET SAS ON.
+TOGGLE PANELS.
+PRINT "Low Orbit Launch Finished.".

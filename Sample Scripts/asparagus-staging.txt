@@ -1,0 +1,29 @@
+set Count to 3.   //Where 3 is the number of asparagus stages.
+set StartFuel to <liquidfuel>.  //Where startFuel is the total amount of Liquid fuel your rocket has.
+
+until orbit = 1.   // Loop with conditional close.
+{
+	set StageSolid to stage:solidfuel.
+	Set StageLiquid to stage:liquidfuel.    //Loop tracked variables.
+	set Lfuel to <liquidfuel>.
+ 
+	//Stages parallel liquid and asparagus. Where 1080 is the amount of fuel in one stage of asparagus.
+	if Lfuel < StartFuel - 1081 AND Count > 0
+	{
+		stage. set StartFuel to Lfuel. set Count to Count - 1.
+	}.
+ 
+	//Stages Solid paralleled on Liquid.
+	if StageSolid > 0 AND StageSolid < 1
+	{
+		stage.
+	}.
+
+	//Stages Solid and Liquid and Decouplers in serial. If the rocket has 0 liquid fuel, it wont stage.  
+	if StageLiquid = 0 AND StageSolid = 0
+	{
+		if Lfuel > 0 {
+			stage.
+		}.
+	}.
+}.
